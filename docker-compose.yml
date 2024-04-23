@@ -15,7 +15,7 @@ services:
   app:
     build:
       context: node
-    entrypoint: dockerize --wait tcp://db:3306 -timeout 20s node .
+    entrypoint: sh -c "npm i && dockerize --wait tcp://db:3306 -timeout 20s node ."
     container_name: app
     networks:
       - node-network
@@ -23,7 +23,6 @@ services:
       - ./node:/usr/src/app
       - /usr/src/app/node_modules
     tty: true
-    command: sh -c "npm install"
     depends_on:
       - db
 
